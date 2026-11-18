@@ -1,0 +1,208 @@
+.movie-dialog {
+  box-sizing: border-box;
+  width: min(680px, calc(100% - 32px));
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 32px;
+  overflow-y: auto;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 24px 80px rgb(0 0 0 / 20%);
+  opacity: 0;
+  transform: translateY(12px) scale(0.98);
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease,
+    overlay 220ms ease allow-discrete,
+    display 220ms ease allow-discrete;
+}
+
+.movie-dialog[open] {
+  opacity: 1;
+  transform: none;
+}
+
+.movie-dialog[open][data-closing="true"] {
+  opacity: 0;
+  transform: translateY(8px) scale(0.98);
+}
+
+@starting-style {
+  .movie-dialog[open] {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+}
+
+.movie-dialog::backdrop {
+  background: rgb(23 23 23 / 0%);
+  transition:
+    background-color 220ms ease,
+    overlay 220ms ease allow-discrete,
+    display 220ms ease allow-discrete;
+}
+
+.movie-dialog[open]::backdrop {
+  background: rgb(23 23 23 / 45%);
+}
+
+.movie-dialog[open][data-closing="true"]::backdrop {
+  background: rgb(23 23 23 / 0%);
+}
+
+@starting-style {
+  .movie-dialog[open]::backdrop {
+    background: rgb(23 23 23 / 0%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .movie-dialog,
+  .movie-dialog::backdrop {
+    transition: none;
+  }
+}
+
+.movie-dialog-header {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  align-items: start;
+  gap: 24px;
+}
+
+.movie-dialog-poster {
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--border);
+}
+
+.movie-dialog-poster img,
+.movie-dialog-poster .image-failed {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.movie-dialog-heading {
+  min-width: 0;
+}
+
+.movie-dialog-heading-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.movie-dialog-eyebrow {
+  margin-top: 8px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.movie-dialog h2 {
+  margin: 12px 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(30px, 5vw, 44px);
+  font-weight: 400;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.movie-dialog-close {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.movie-dialog-close:hover {
+  background: var(--accent);
+}
+
+.movie-dialog-close:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 4px;
+}
+
+.movie-dialog-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin: 28px 0;
+  padding: 20px 0;
+  border-block: 1px solid var(--border);
+}
+
+.movie-dialog-meta dt {
+  margin-bottom: 8px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.movie-dialog-meta dd {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.movie-dialog-overview h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+}
+
+.movie-dialog-overview p {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+  .movie-dialog {
+    padding: 24px;
+  }
+
+  .movie-dialog-header {
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .movie-dialog {
+    padding: 16px;
+  }
+
+  .movie-dialog-header {
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .movie-dialog-heading-top {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .movie-dialog-close {
+    margin-inline-start: auto;
+  }
+
+  .movie-dialog-meta {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+}

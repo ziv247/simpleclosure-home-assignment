@@ -1,0 +1,200 @@
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 24px;
+  padding: 16px;
+  margin-bottom: 32px;
+  background: var(--surface);
+  border-radius: 12px;
+}
+
+.filters-fields {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.filters-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.filters-actions .view-toggle {
+  height: 54px;
+}
+
+.filter-group select,
+.filters-actions > .button {
+  min-height: 54px;
+}
+
+.filter-group {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  flex: 1 1 180px;
+}
+
+.filter-group label {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.filter-group .error {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.filter-group select {
+  width: 100%;
+  min-height: 54px;
+  padding: 10px 12px;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 160ms ease;
+}
+
+@supports (appearance: base-select) and selector(::picker(select)) {
+  .filter-group select,
+  .filter-group select::picker(select) {
+    appearance: base-select;
+  }
+
+  .filter-group select {
+    display: flex;
+    align-items: center;
+    height: 54px;
+    padding: 0 14px;
+    border-radius: 12px;
+    line-height: 1;
+  }
+
+  .filter-group select::picker-icon {
+    width: 10px;
+    height: 10px;
+    margin-inline-start: auto;
+    color: var(--text-muted);
+    opacity: 0.7;
+  }
+
+  .filter-group select::picker(select) {
+    margin-block-start: 8px;
+    padding: 6px;
+    max-height: min(320px, 50dvh);
+    overflow-y: auto;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 12px 32px rgb(0 0 0 / 12%);
+  }
+
+  .filter-group select option {
+    display: flex;
+    align-items: center;
+    min-height: 36px;
+    padding: 0 12px;
+    border-radius: 8px;
+  }
+
+  .filter-group select option:checked {
+    background: var(--accent);
+    color: var(--pressed);
+    font-weight: 500;
+  }
+
+  .filter-group select option:hover:not(:checked) {
+    background: var(--bg);
+  }
+
+  .filter-group select option:focus-visible {
+    outline: 2px solid var(--text);
+    outline-offset: -2px;
+  }
+}
+
+.view-toggle {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  position: relative;
+  width: fit-content;
+}
+
+.view-toggle button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  position: relative;
+  z-index: 1;
+  transition: color 180ms ease;
+}
+
+.view-toggle button[aria-pressed="true"] {
+  color: var(--pressed);
+  background: transparent;
+}
+
+.view-toggle::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: var(--accent);
+  /* The accent fill alone is 1.04:1 against --bg; the border carries the state. */
+  border: 1px solid var(--text);
+  pointer-events: none;
+  transition: transform 180ms ease;
+}
+
+.view-toggle[data-view="list"]::before {
+  transform: translateX(48px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .view-toggle::before,
+  .view-toggle button {
+    transition: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filters-actions {
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 600px) {
+  .filters-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .filter-group--sort {
+    grid-column: 1 / -1;
+  }
+}
